@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <title>Example Tone Generator</title>
+        <style type="text/css">
+            .frequency {
+                width: 100%;
+                height: 20%;
+            }
+            input[type="range"] {
+                width:100%;
+                height:4px;
+            }
+            .frequency input::-webkit-slider-thumb {
+                -webkit-appearance:none;
+                -moz-apperance:none;
+                width:20px;
+                height:20px;
+                -webkit-border-radius:10px;
+                -moz-border-radius:10px;
+                -ms-border-radius:10px;
+                -o-border-radius:10px;
+                border-radius:10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Example Tone Generator</h1>
+        <div id="soundStatus"></div>
+        <input class="frequency" id="frequency" type="range" min="20" max="20000" step="1">
+        <button id="startSound">Start Sound</button>
+        <button id="stopSound">Stop Sound</button>
+        <div id="frequencyDisplay"></div>
+        <script src="../webAudioTools.js"></script>
+        <script src="../toneGenerator.js"></script>
+        <script type="text/javascript">
+            (function (global) {
+                var frequencySlider = document.getElementById('frequency'),
+                    startSound = document.getElementById('startSound'),
+                    stopSound = document.getElementById('stopSound'),
+                    frequencyDisplay = document.getElementById('frequencyDisplay'),
+                    frequency = frequencySlider.value,
+                    isPlaying = false;
+
+                startSound.onclick = function () {
+                    toneGenerator.startTone(frequency);
+                    isPlaying = true;
+                };
+
+                stopSound.onclick = function () {
+                    toneGenerator.stopTone(frequency);
+                    isPlaying = false;
+                };
+
+                frequencySlider.onchange = function () {
+                    frequency = frequencySlider.value
+                    if (isPlaying === true) {
+                        toneGenerator.startTone(frequency);
+                    }
+
+                    frequencyDisplay.innerHTML = frequency;
+                };
+
+
+                // init once the page has finished loading.
+                window.onload = function () { 
+                    global.toneGenerator = new global.ToneGenerator();
+
+                    toneGenerator.init();
+                };
+
+            }(this));
+        </script>
+    </body>
+</html>
