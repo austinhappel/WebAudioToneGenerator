@@ -15,7 +15,7 @@
             oscillator = global.context.createOscillator();
             global.fixOscillator(oscillator);
             oscillator.frequency.value = 440;
-            amp = global.context.createGainNode();
+            amp = global.context.createGain ? global.context.createGain() : global.context.createGainNode();
             amp.gain.value = 0;
 
             // Connect ooscillator to amp and amp to the mixer of the context.
